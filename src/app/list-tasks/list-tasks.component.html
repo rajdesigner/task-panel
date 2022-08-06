@@ -1,0 +1,140 @@
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px', fullScreenBackdrop: true }"></ngx-loading>
+<div class="row mt_20">
+    <div class="col-md-12">
+        <mat-form-field>
+            <mat-label>Search by assigned to, due Date and any string</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Ahmed" #input>
+        </mat-form-field>
+    </div>
+</div>
+
+<div class="tasks-container">
+    <h2>Normal Priority</h2>
+
+    <div cdkDropList #normalList="cdkDropList" [cdkDropListData]="normaltasks"
+        [cdkDropListConnectedTo]="[mediumPriorityList,highList ]" class="task-list"
+        (cdkDropListDropped)="drop($event, '1')">
+        <div class="task-box high-priority" *ngFor="let item of normaltasks, let i =index" [cdkDragData]="item" cdkDrag>
+            <div class="user-actions">
+                <button (click)="openCreateTaskDialog(item['priority'], 'update', item)">
+                    <span class="material-icons">
+                        create
+                    </span>
+                </button>
+                <button (click)="deleteTask(item, 'delete', i, 'normal')">
+                    <span class="material-icons">
+                        delete
+                    </span>
+                </button>
+            </div>
+            <div class="task-items"><span>{{item['message']}} </span> <span class="_user_attributes">Assigned to:
+                    {{item['assigned_name']}}
+                    <br /> Due Date: {{item['due_date']}}</span>
+            </div>
+        </div>
+    </div>
+
+    <button class="continue-application" (click)="openCreateTaskDialog('1', 'create', null)">
+        <div>
+            <div class="pencil"></div>
+            <div class="folder">
+                <div class="top">
+                    <svg viewBox="0 0 24 27">
+                        <path
+                            d="M1,0 L23,0 C23.5522847,-1.01453063e-16 24,0.44771525 24,1 L24,8.17157288 C24,8.70200585 23.7892863,9.21071368 23.4142136,9.58578644 L20.5857864,12.4142136 C20.2107137,12.7892863 20,13.2979941 20,13.8284271 L20,26 C20,26.5522847 19.5522847,27 19,27 L1,27 C0.44771525,27 6.76353751e-17,26.5522847 0,26 L0,1 C-6.76353751e-17,0.44771525 0.44771525,1.01453063e-16 1,0 Z">
+                        </path>
+                    </svg>
+                </div>
+                <div class="paper"></div>
+            </div>
+        </div>
+        Add Task
+    </button>
+</div>
+
+<div class="tasks-container">
+    <h2>Medium Priority</h2>
+
+    <div cdkDropList #mediumPriorityList="cdkDropList" [cdkDropListData]="mediumprioritytasks"
+        [cdkDropListConnectedTo]="[normalList, highList]" class="task-list" (cdkDropListDropped)="drop($event, '2')">
+        <div class="task-box medium-priority" *ngFor="let item of mediumprioritytasks" [cdkDragData]="item" cdkDrag>
+            <div class="user-actions">
+                <button (click)="openCreateTaskDialog('1', 'update', item)">
+                    <span class="material-icons">
+                        create
+                    </span>
+                </button>
+                <button (click)="deleteTask(item, 'delete', i, 'medium')">
+                    <span class="material-icons">
+                        delete
+                    </span>
+                </button>
+            </div>
+            <div class="task-items"><span>{{item['message']}} </span> <span class="_user_attributes">Assigned to:
+                    {{item['assigned_name']}}
+                    <br /> Due Date: {{item['due_date']}}</span>
+            </div>
+        </div>
+    </div>
+
+    <button class="continue-application" (click)="openCreateTaskDialog('2', 'create', null)">
+        <div>
+            <div class="pencil"></div>
+            <div class="folder">
+                <div class="top">
+                    <svg viewBox="0 0 24 27">
+                        <path
+                            d="M1,0 L23,0 C23.5522847,-1.01453063e-16 24,0.44771525 24,1 L24,8.17157288 C24,8.70200585 23.7892863,9.21071368 23.4142136,9.58578644 L20.5857864,12.4142136 C20.2107137,12.7892863 20,13.2979941 20,13.8284271 L20,26 C20,26.5522847 19.5522847,27 19,27 L1,27 C0.44771525,27 6.76353751e-17,26.5522847 0,26 L0,1 C-6.76353751e-17,0.44771525 0.44771525,1.01453063e-16 1,0 Z">
+                        </path>
+                    </svg>
+                </div>
+                <div class="paper"></div>
+            </div>
+        </div>
+        Add Task
+    </button>
+</div>
+
+<div class="tasks-container">
+    <h2>Low Priority</h2>
+
+    <div cdkDropList #highList="cdkDropList" [cdkDropListData]="lowtasks"
+        [cdkDropListConnectedTo]="[normalList, mediumPriorityList]" class="task-list"
+        (cdkDropListDropped)="drop($event, '3')">
+        <div class="task-box low-priority" *ngFor="let item of lowtasks" [cdkDragData]="item" cdkDrag>
+            <div class="user-actions">
+                <button (click)="openCreateTaskDialog('1', 'update', item)">
+                    <span class="material-icons">
+                        create
+                    </span>
+                </button>
+                <button (click)="deleteTask(item, 'delete', i, 'low')">
+                    <span class="material-icons">
+                        delete
+                    </span>
+                </button>
+            </div>
+            <div class="task-items"><span>{{item['message']}} </span> <span class="_user_attributes">Assigned to:
+                    {{item['assigned_name']}}
+                    <br /> Due Date: {{item['due_date']}}</span>
+            </div>
+        </div>
+    </div>
+
+    <button class="continue-application" (click)="openCreateTaskDialog('3', 'create', null)">
+        <div>
+            <div class="pencil"></div>
+            <div class="folder">
+                <div class="top">
+                    <svg viewBox="0 0 24 27">
+                        <path
+                            d="M1,0 L23,0 C23.5522847,-1.01453063e-16 24,0.44771525 24,1 L24,8.17157288 C24,8.70200585 23.7892863,9.21071368 23.4142136,9.58578644 L20.5857864,12.4142136 C20.2107137,12.7892863 20,13.2979941 20,13.8284271 L20,26 C20,26.5522847 19.5522847,27 19,27 L1,27 C0.44771525,27 6.76353751e-17,26.5522847 0,26 L0,1 C-6.76353751e-17,0.44771525 0.44771525,1.01453063e-16 1,0 Z">
+                        </path>
+                    </svg>
+                </div>
+                <div class="paper"></div>
+            </div>
+        </div>
+        Add Task
+    </button>
+</div>

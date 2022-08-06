@@ -1,0 +1,29 @@
+<h1 mat-dialog-title>Create Task</h1>
+<div mat-dialog-content>
+    <mat-form-field>
+        <mat-label>Task Description</mat-label>
+        <input matInput [(ngModel)]="task['message']">
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Due Date</mat-label>
+        <input matInput [matDatepicker]="picker1" [(ngModel)]="task['due_date']">
+        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
+    </mat-form-field>
+    <span *ngIf="data['clickeditem']" class="alert-text"> * Due Date is {{task['due_date']}}. Change it from
+        calendar.</span>
+
+    <mat-form-field>
+        <mat-label>Assign task to</mat-label>
+        <select matNativeControl [(ngModel)]="task['assigned_to']">
+            <option value="" selected></option>
+            <option *ngFor="let user of userlist, let i =index" value="{{user['id']}}">{{user['name']}}</option>
+        </select>
+    </mat-form-field>
+</div>
+<div mat-dialog-actions>
+    <button mat-raised-button color="primary" cdkFocusInitial (click)="submitTask()"
+        [disabled]="!task['message']">Ok</button>
+    <button mat-button (click)="onNoClick()">No Thanks</button>
+</div>
