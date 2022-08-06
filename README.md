@@ -2,6 +2,7 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.5.
 
+### User can view, update, create and delete tasks
 
 
 ## Development server
